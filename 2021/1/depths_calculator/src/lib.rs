@@ -30,7 +30,26 @@ pub fn get_file_data(file_path: &str) -> Vec<i64> {
 }
 
 pub fn get_number_of_depth_increases_sliding_window(depths: Vec<i64>) -> i64 {
-    let mut number_of_depth_increases_sliding_window = 0;
+    let artificial_limit = 3;
+    let mut current_iter = 0;
+    let mut sums = vec![];
+
+    for (i, depth) in depths.iter().enumerate() {
+        current_iter += 1;
+        let current_depth = depth;
+        let next_depth = &depths[i + 1];
+        let next_next_depth = &depths[i + 2];
+        // let depth_vec = vec![current_depth, next_depth, next_next_depth];
+        let sum = current_depth + next_depth + next_next_depth;
+        println!(
+            "sum of {} + {} + {}: {}",
+            current_depth, next_depth, next_next_depth, sum
+        );
+        sums.push(sum);
+        if current_iter > artificial_limit {
+            break;
+        }
+    }
 
     5
 }
