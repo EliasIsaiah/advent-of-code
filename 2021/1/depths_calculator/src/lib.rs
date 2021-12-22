@@ -24,7 +24,7 @@ pub fn get_number_of_depth_increases(depths: Vec<i64>) -> i64 {
 }
 
 pub fn get_file_data(file_path: &str) -> Vec<i64> {
-    let file = File::open(file_path).expect("file asn't found.");
+    let file = File::open(file_path).expect("file wasn't found.");
     let reader = BufReader::new(file);
 
     let numbers: Vec<i64> = reader
