@@ -12,12 +12,13 @@ pub fn get_number_of_depth_increases(depths: Vec<i64>) -> i64 {
             if current_depth < &next_depth {
                 // println!("{} is less than {}", current_depth, &next_depth);
                 number_of_depth_increases += 1;
-            } // else {
-              //     println!(
-              //         "{} is greater than or equal to than {}",
-              //         current_depth, &next_depth
-              //     );
-              // }
+            } 
+/*             else {
+                  println!(
+                      "{} is greater than or equal to than {}",
+                      current_depth, &next_depth
+                  );
+              } */
         }
     }
     number_of_depth_increases
@@ -47,10 +48,10 @@ pub fn generate_sliding_vector(depths: Vec<i64>) -> Vec<i64> {
         let next_depth = &depths[i + 1];
         let next_next_depth = &depths[i + 2];
         let sum = current_depth + next_depth + next_next_depth;
-        // println!(
-        //     "sum of {} + {} + {}: {}",
-        //     current_depth, next_depth, next_next_depth, sum
-        // );
+/*         println!(
+            "sum of {} + {} + {}: {}",
+            current_depth, next_depth, next_next_depth, sum
+        ); */
         sums.push(sum);
     }
     sums
