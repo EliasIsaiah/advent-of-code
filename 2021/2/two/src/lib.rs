@@ -40,15 +40,14 @@ fn calculate_totals(
     depth: &mut i64,
     aim: &mut i64,
 ) {
-    if direction.eq("forward") {
-        *horizontal_position += value;
-        *depth += *aim * value;
-    }
-    if direction.eq("up") {
-        *aim -= value;
-    }
-    if direction.eq("down") {
-        *aim += value;
+    match direction {
+        "forward" => {
+            *horizontal_position += value;
+            *depth += *aim * value;
+        }
+        "up" => *aim -= value,
+        "down" => *aim += value,
+        _ => panic!("unexpected value encountered!"),
     }
 }
 
