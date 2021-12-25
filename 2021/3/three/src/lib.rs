@@ -29,13 +29,8 @@ pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
     }
 
     for (i, ones_value) in ones.iter().enumerate() {
-        if ones_value > &zeros[i] {
-            result_gamma[i] = "1";
-            result_epsilon[i] = "0";
-        } else {
-            result_gamma[i] = "0";
-            result_epsilon[i] = "1";
-        }
+        result_gamma[i] = if ones_value > &zeros[i] { "1" } else { "0" };
+        result_epsilon[i] = if ones_value > &zeros[i] { "0" } else { "1" };
     }
     vec![result_gamma.join(""), result_epsilon.join("")]
 }
