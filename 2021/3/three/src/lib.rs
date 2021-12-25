@@ -3,7 +3,6 @@ use std::io::BufRead;
 use std::io::BufReader;
 
 pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
-    // let result: Vec<char> = vec![];
     let mut ones: Vec<i32> = vec![];
     let mut zeros: Vec<i32> = vec![];
     let mut result_gamma = vec![];
