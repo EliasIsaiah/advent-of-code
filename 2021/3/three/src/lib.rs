@@ -73,7 +73,25 @@ mod tests {
     #[test]
     fn do_part_three() {
         let input = get_file_data("input.txt");
-        let actual = get_most_common_bits(input);
-        println!("result: {:?}", actual);
+
+        let gamma_and_epsilon_binary = get_most_common_bits(input);
+
+        let gamma = &gamma_and_epsilon_binary[0];
+        let epsilon = &gamma_and_epsilon_binary[1];
+
+        let gamma_converted = u32::from_str_radix(&gamma, 2).unwrap();
+        let epsilon_converted = u32::from_str_radix(&epsilon, 2).unwrap();
+
+        let result = gamma_converted * epsilon_converted;
+
+        println!("{} converted to base 10 is : {:?}", gamma, gamma_converted);
+        println!(
+            "{} converted to base 10 is : {:?}",
+            epsilon, epsilon_converted
+        );
+        println!(
+            "{:?} * {:?} = {:?}",
+            gamma_converted, epsilon_converted, result
+        );
     }
 }
