@@ -63,6 +63,28 @@ mod tests {
     }
 
     #[test]
+    fn most_common_bits_rigged() {
+        let input = vec![
+            "00100", "01000", "10010", "10111", "10101", "01111", "00111", "11100", "10000",
+            "11001", "00010", "01010",
+        ]
+        .iter()
+        .map(|s| s.parse::<String>().unwrap())
+        .collect();
+        // let expected = vec!["10110", "01001"];
+        let actual = get_most_common_bits(input);
+        let gamma_converted = u32::from_str_radix(&actual[0], 2).unwrap();
+        let epsilon_converted = u32::from_str_radix(&actual[1], 2).unwrap();
+        println!("{} converted to base 10 is : {:?}", &actual[0], gamma_converted);
+        println!(
+            "{} converted to base 10 is : {:?}",
+            &actual[1], epsilon_converted
+        );
+        // println!("actual result: {:?}", actual);
+        // assert_eq!(expected, actual);
+    }
+
+    #[test]
     fn do_part_three() {
         let input = get_file_data("input.txt");
 
