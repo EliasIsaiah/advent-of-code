@@ -10,6 +10,7 @@ pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
     let mut result_epsilon = vec![];
     let length = input[0].len();
     let mut iterator = 0;
+
     while (iterator < length) {
         ones.push(0);
         zeros.push(0);
@@ -27,6 +28,7 @@ pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
             };
         }
     }
+
     for (i, ones_value) in ones.iter().enumerate() {
         if ones_value > &zeros[i] {
             result_gamma[i] = "1";
