@@ -11,7 +11,7 @@ pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
     let length = input[0].len();
     let mut iterator = 0;
 
-    while (iterator < length) {
+    while iterator < length {
         ones.push(0);
         zeros.push(0);
         result_gamma.push("");
