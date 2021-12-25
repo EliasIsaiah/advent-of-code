@@ -37,10 +37,6 @@ pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
         }
     }
     vec![result_gamma.join(""), result_epsilon.join("")]
-    // let gamma_value:i32 = isize::from_str_radix(&result_gamma.join(""), 10).unwrap();
-    // let epsilon_value:i32 = isize::from_str_radix(&result_epsilon.join(""), 10).unwrap();
-    // gamma_value * epsilon_value
-    // , result_epsilon.join("")]
 }
 
 pub fn get_file_data(file_path: &str) -> Vec<String> {
