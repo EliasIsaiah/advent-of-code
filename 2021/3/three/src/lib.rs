@@ -2,6 +2,9 @@ use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 
+static mut ones_global: Vec<i32> = vec![];
+static mut zeros_global: Vec<i32> = vec![];
+
 pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
     let mut ones: Vec<i32> = vec![];
     let mut zeros: Vec<i32> = vec![];
@@ -32,6 +35,12 @@ pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
         result_gamma[i] = if ones_value > &zeros[i] { "1" } else { "0" };
         result_epsilon[i] = if ones_value > &zeros[i] { "0" } else { "1" };
     }
+
+    unsafe {
+        ones_global = ones.clone();
+        zeros_global = zeros.clone();
+    }
+
     vec![result_gamma.join(""), result_epsilon.join("")]
 }
 
@@ -90,5 +99,24 @@ mod tests {
         let result = calculate_result(gamma, epsilon);
         println!("result: {:?}", result);
         assert_eq!(3374136, result);
+    }
+
+    #[test]
+    fn get_ones_and_zeros() {
+        let input = get_file_data("input.txt");
+
+        get_most_common_bits(input);
+
+        let ones;
+        let zeros;
+
+        unsafe {
+            ones = ones_global.as_slice();
+            zeros = zeros_global.as_slice();
+        }
+            println!(
+                "ones: {:?} \n zeros: {:?}",
+                ones, zeros
+            );
     }
 }
