@@ -1,11 +1,12 @@
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
+use std::str::Chars;
 
 static mut ones_global: Vec<i32> = vec![];
 static mut zeros_global: Vec<i32> = vec![];
 
-pub fn get_most_common_bits(input: Vec<String>) -> Vec<String> {
+pub fn get_most_common_bits(input: &Vec<String>) -> Vec<String> {
     let mut ones: Vec<i32> = vec![];
     let mut zeros: Vec<i32> = vec![];
     let mut result_gamma = vec![];
@@ -69,6 +70,18 @@ pub fn calculate_result(gamma: &String, epsilon: &String) -> u32 {
     result
 }
 
+pub fn get_oxygen(input: &Vec<String>, ones: &[i32], zeros: &[i32]) -> String {
+    for input_string in input {
+        if input.len() > 1 {
+            let chars = input_string.chars().collect::<Vec<_>>();
+        } else {
+            return input_string.clone();
+        }
+    }
+
+    "".to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -82,7 +95,7 @@ mod tests {
         .map(|s| s.parse::<String>().unwrap())
         .collect();
         let expected = vec!["10110", "01001"];
-        let actual = get_most_common_bits(input);
+        let actual = get_most_common_bits(&input);
         println!("actual result: {:?}", actual);
         assert_eq!(expected, actual);
     }
@@ -91,7 +104,7 @@ mod tests {
     fn do_part_three() {
         let input = get_file_data("input.txt");
 
-        let gamma_and_epsilon_binary = get_most_common_bits(input);
+        let gamma_and_epsilon_binary = get_most_common_bits(&input);
 
         let gamma = &gamma_and_epsilon_binary[0];
         let epsilon = &gamma_and_epsilon_binary[1];
@@ -105,7 +118,7 @@ mod tests {
     fn get_ones_and_zeros() {
         let input = get_file_data("input.txt");
 
-        get_most_common_bits(input);
+        get_most_common_bits(&input);
 
         let ones;
         let zeros;
@@ -114,9 +127,30 @@ mod tests {
             ones = ones_global.as_slice();
             zeros = zeros_global.as_slice();
         }
-            println!(
-                "ones: {:?} \n zeros: {:?}",
-                ones, zeros
-            );
+        println!("ones:  {:?} \nzeros: {:?}", ones, zeros);
+    }
+
+    #[test]
+    fn do_second_part() {
+        let input = vec![
+            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
+            "11001", "00010", "01010",
+        ]
+        .iter()
+        .map(|s| s.parse::<String>().unwrap())
+        .collect();
+
+        get_most_common_bits(&input);
+
+        let ones;
+        let zeros;
+
+        unsafe {
+            ones = ones_global.as_slice();
+            zeros = zeros_global.as_slice();
+        }
+        println!("ones:  {:?} \nzeros: {:?}", ones, zeros);
+
+        let oxygen: String = get_oxygen(&input.as_slice().to_vec(), &ones, &zeros);
     }
 }
