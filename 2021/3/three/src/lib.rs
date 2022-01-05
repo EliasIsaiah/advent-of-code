@@ -70,25 +70,48 @@ pub fn calculate_result(gamma: &String, epsilon: &String) -> u32 {
     result
 }
 
-pub fn get_oxygen(input: Vec<String>, ones: Vec<i32>, zeros: Vec<i32>) -> String {
+pub fn get_oxygen(
+    input: Vec<String>,
+    ones: Vec<i32>,
+    zeros: Vec<i32>,
+    index: usize,
+    is_oxygen: bool,
+) -> String {
     // let length = input.clone().len();
     // let input_clone = input.clone();
+    if input.len() == 1 {
+        return input[0].clone();
+    }
     for input_string in input.clone() {
-        if input.len() > 1 {
-            let chars = input_string.chars().collect::<Vec<_>>();
-            let ith_char = chars[0];
+        for (i, ith_char) in input_string.chars().enumerate() {
             println!("initial input: {:?}", input);
-            let filtered_input: Vec<String> = input.clone()
+            let num_zeros = zeros[i];
+            let num_ones = ones[i];
+            let ones_greater = num_ones > num_zeros;
+            let zeros_greater = num_zeros > num_ones;
+
+            let mut filter_out_value: String = if is_oxygen {
+                String::from("0")
+            } else {
+                String::from("1")
+            };
+
+            if ith_char.to_string().eq("1") {
+                if ones_greater {
+                    filter_out_value = String::from("0")
+                } else if zeros_greater {
+                    filter_out_value = String::from("1")
+                }
+            }
+
+            let filtered_input: Vec<String> = input
+                .clone()
                 .into_iter()
                 .filter(|s| s.parse::<String>().unwrap().starts_with("1"))
                 .collect();
-            // println!("chars: {:?}", chars);
-            // println!("filtered input: {:?}", filtered_input);
-        } else {
-            return input_string.clone();
         }
     }
-    "".to_string()
+    String::new()
 }
 
 #[cfg(test)]
