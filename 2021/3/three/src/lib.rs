@@ -70,15 +70,24 @@ pub fn calculate_result(gamma: &String, epsilon: &String) -> u32 {
     result
 }
 
-pub fn get_oxygen(input: &Vec<String>, ones: &[i32], zeros: &[i32]) -> String {
-    for input_string in input {
+pub fn get_oxygen(input: Vec<String>, ones: Vec<i32>, zeros: Vec<i32>) -> String {
+    // let length = input.clone().len();
+    // let input_clone = input.clone();
+    for input_string in input.clone() {
         if input.len() > 1 {
             let chars = input_string.chars().collect::<Vec<_>>();
+            let ith_char = chars[0];
+            println!("initial input: {:?}", input);
+            let filtered_input: Vec<String> = input.clone()
+                .into_iter()
+                .filter(|s| s.parse::<String>().unwrap().starts_with("1"))
+                .collect();
+            // println!("chars: {:?}", chars);
+            // println!("filtered input: {:?}", filtered_input);
         } else {
             return input_string.clone();
         }
     }
-
     "".to_string()
 }
 
@@ -146,11 +155,11 @@ mod tests {
         let zeros;
 
         unsafe {
-            ones = ones_global.as_slice();
-            zeros = zeros_global.as_slice();
+            ones = ones_global.to_vec();
+            zeros = zeros_global.to_vec();
         }
         println!("ones:  {:?} \nzeros: {:?}", ones, zeros);
 
-        let oxygen: String = get_oxygen(&input.as_slice().to_vec(), &ones, &zeros);
+        let oxygen: String = get_oxygen(input.clone(), ones, zeros);
     }
 }
