@@ -90,28 +90,30 @@ pub fn get_oxygen(
             let ones_greater = num_ones > num_zeros;
             let zeros_greater = num_zeros > num_ones;
 
-            let mut filter_out_value: String = if is_oxygen {
-                String::from("0")
-            } else {
+            let mut keep_value: String = if is_oxygen {
                 String::from("1")
+            } else {
+                String::from("0")
             };
 
             if ith_char.to_string().eq("1") {
                 if ones_greater {
-                    filter_out_value = String::from("0")
+                    keep_value = String::from("0")
                 } else if zeros_greater {
-                    filter_out_value = String::from("1")
+                    keep_value = String::from("1")
                 }
             }
-
-            let filtered_input: Vec<String> = input
-                .clone()
-                .into_iter()
-                .filter(|s| s.parse::<String>().unwrap().starts_with("1"))
-                .collect();
         }
     }
-    String::new()
+    "".to_string()
+}
+
+fn get_filtered_vector(input: &Vec<String>, filter_out_value: String) -> Vec<String> {
+    input
+        .clone()
+        .into_iter()
+        .filter(|s| s.parse::<String>().unwrap().starts_with(&filter_out_value))
+        .collect()
 }
 
 #[cfg(test)]
@@ -183,6 +185,47 @@ mod tests {
         }
         println!("ones:  {:?} \nzeros: {:?}", ones, zeros);
 
-        let oxygen: String = get_oxygen(input.clone(), ones, zeros);
+        let oxygen: String = get_oxygen(input.clone(), ones, zeros, 0, true);
+    }
+
+    #[test]
+    fn do_one_pass_oxygen() {
+        let input = vec![
+            "00100".to_string(),
+            "11110".to_string(),
+            "10110".to_string(),
+            "10111".to_string(),
+            "10101".to_string(),
+            "01111".to_string(),
+            "00111".to_string(),
+            "11100".to_string(),
+            "10000".to_string(),
+            "11001".to_string(),
+            "00010".to_string(),
+            "01010".to_string(),
+        ];
+        let expected = vec![
+            "11110".to_string(),
+            "10110".to_string(),
+            "10111".to_string(),
+            "10101".to_string(),
+            "11100".to_string(),
+            "10000".to_string(),
+            "11001".to_string(),
+            "01010".to_string(),
+        ];
+
+        get_most_common_bits(&input);
+
+        let ones;
+        let zeros;
+
+        unsafe {
+            ones = ones_global.to_vec();
+            zeros = zeros_global.to_vec();
+        }
+        println!("ones:  {:?} \nzeros: {:?}", ones, zeros);
+
+        let expected: String = get_oxygen(input.clone(), ones, zeros, 0, true);
     }
 }
